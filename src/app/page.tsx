@@ -1,11 +1,13 @@
 'use client';
 
 import { useState } from 'react';
+import * as React from 'react';
 import { StockSearch } from '@/components/StockSearch';
 import { StockCard } from '@/components/StockCard';
 import { PredictionCard } from '@/components/PredictionCard';
 import { useStockData } from '@/hooks/useStockData';
 import { usePrediction } from '@/hooks/usePrediction';
+import ExplainForm from '@/components/ExplainForm';
 
 export default function Home() {
   const { stockData, loading: stockLoading, error: stockError, fetchStockData } = useStockData();
@@ -133,6 +135,11 @@ export default function Home() {
               </div>
             )}
           </div>
+        </div>
+
+        {/* OpenAI Explain Challenge Section */}
+        <div className="max-w-2xl mx-auto mt-12">
+          <ExplainForm />
         </div>
 
         {/* Footer */}

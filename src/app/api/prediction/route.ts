@@ -7,6 +7,27 @@ import { StockPrediction } from '@/types';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
+    // Support both symbol-based and stockData-based requests
+    if (body.stockData) {
+      // New report generation logic for challenge
+      const openai = await import('openai');
+      const client = new openai.default({ apiKey: process.env.OPENAI_API_KEY });
+      try {
+        const completion = await client.chat.completions.create({
+          model: 'gpt-3.5-turbo',
+          messages: [
+            { role: 'system', content: 'You are a financial advisor. Advise whether to buy or sell based on the following stock data.' },
+            { role: 'user', content: body.stockData }
+          ],
+          max_tokens: 300,
+        });
+        const report = completion.choices[0]?.message?.content || '';
+        return NextResponse.json({ report });
+      } catch (error) {
+        return NextResponse.json({ error: error.message }, { status: 500 });
+      }
+    }
+
     const { symbol } = body;
 
     if (!symbol) {
