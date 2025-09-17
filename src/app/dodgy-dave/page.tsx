@@ -11,7 +11,7 @@ export default function DodgyDavePage() {
   const [apiMessage, setApiMessage] = React.useState('');
   const [report, setReport] = React.useState('');
   const [error, setError] = React.useState('');
-  const polygonApiKey = (typeof window !== 'undefined' && (window as any).POLYGON_API_KEY) || '';
+  // Remove client-side Polygon API key usage
 
   const handleTickerSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,7 +40,8 @@ export default function DodgyDavePage() {
     try {
       const dates = await import('@/utils/data').then(mod => mod.dates);
       const stockData = await Promise.all(tickersArr.map(async (ticker) => {
-        const url = `https://api.polygon.io/v2/aggs/ticker/${ticker}/range/1/day/${dates.startDate}/${dates.endDate}?apiKey=${polygonApiKey}`;
+        // Call secure API route instead of Polygon.io directly
+        const url = `/api/stock?symbol=${ticker}&start=${dates.startDate}&end=${dates.endDate}`;
         const response = await fetch(url);
         const data = await response.text();
         const status = response.status;
