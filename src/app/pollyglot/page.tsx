@@ -1,3 +1,4 @@
+import Image from 'next/image';
 "use client";
 import * as React from 'react';
 import Link from 'next/link';
@@ -52,7 +53,7 @@ export default function PollyglotPage() {
 
   return (
     <main className="max-w-xl mx-auto p-8 rounded-2xl shadow-xl bg-gradient-to-br from-purple-600 via-pink-500 to-red-500 min-h-[80vh]">
-      <img src="/images/polly-glot-1.jpg" alt="Pollyglot Bird" className="block mx-auto mb-4 max-w-[120px] rounded-xl shadow-lg" />
+  <Image src="/images/polly-glot-1.jpg" alt="Pollyglot Bird" width={120} height={120} className="block mx-auto mb-4 rounded-xl shadow-lg" />
       <h1 className="text-3xl font-extrabold text-white text-center mb-2 select-none" style={{ transform: 'rotate(-2deg)' }}>
         <span className="animate-pulse">Pollyglot Perfect Translation</span>
       </h1>
@@ -85,7 +86,7 @@ export default function PollyglotPage() {
       )}
       {image && (
         <div className="text-center my-8">
-          <img src={`data:image/png;base64,${image}`} alt="AI generated art" className="max-w-full rounded-xl shadow-lg" />
+          <Image src={`data:image/png;base64,${image}`} alt="AI generated art" width={256} height={256} className="max-w-full rounded-xl shadow-lg" />
         </div>
       )}
       <div className="mt-8">

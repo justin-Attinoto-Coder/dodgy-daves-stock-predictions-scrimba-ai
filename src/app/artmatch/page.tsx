@@ -1,7 +1,6 @@
+import Image from 'next/image';
 "use client";
 import * as React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
 
 export default function ArtMatchPage() {
   const [prompt, setPrompt] = React.useState('');
@@ -21,7 +20,7 @@ export default function ArtMatchPage() {
         body: JSON.stringify({ prompt })
       });
       if (!response.ok) {
-        let errorText = await response.text();
+  const errorText = await response.text();
         if (response.status === 429) {
           setError('AI service rate limit reached. Please wait and try again.');
         } else if (response.status === 503) {
@@ -58,9 +57,11 @@ export default function ArtMatchPage() {
       } else {
         setError('Image generation failed.');
       }
-    } catch (error: any) {
+  } catch (error: unknown) {
       let errorMsg = 'Error generating image';
-      if (error?.message) errorMsg += ': ' + error.message;
+      if (error && typeof error === 'object' && 'message' in error && typeof (error as any).message === 'string') {
+        errorMsg += ': ' + (error as any).message;
+      }
       setError(errorMsg);
       console.error(error);
     }
@@ -70,8 +71,8 @@ export default function ArtMatchPage() {
   return (
     <main className="max-w-xl mx-auto p-8 rounded-2xl shadow-xl bg-gradient-to-br from-pink-500 via-purple-500 to-red-500 min-h-[80vh]">
       <div className="flex justify-center gap-4 mb-6">
-        <img src="/images/art-match-1.jpg" alt="ArtMatch Example 1" className="max-w-[100px] rounded-xl shadow-lg" />
-        <img src="/images/art-match-2.jpg" alt="ArtMatch Example 2" className="max-w-[100px] rounded-xl shadow-lg" />
+  <Image src="/images/art-match-1.jpg" alt="ArtMatch Example 1" width={100} height={100} className="rounded-xl shadow-lg" />
+  <Image src="/images/art-match-2.jpg" alt="ArtMatch Example 2" width={100} height={100} className="rounded-xl shadow-lg" />
       </div>
       <h1 className="text-3xl font-extrabold text-white text-center mb-8 select-none" style={{ transform: 'rotate(-2deg)' }}>
         <span className="animate-pulse">ArtMatch: AI Art Generator</span>
@@ -98,7 +99,7 @@ export default function ArtMatchPage() {
       {error && <div className="text-red-300 text-center mb-4 font-semibold">{error}</div>}
       <div id="output-img" className="text-center my-8">
         {image && (
-          <img src={`data:image/png;base64,${image}`} alt="AI generated art" className="max-w-full rounded-xl shadow-lg mx-auto" />
+          <Image src={`data:image/png;base64,${image}`} alt="AI generated art" width={256} height={256} className="max-w-full rounded-xl shadow-lg mx-auto" />
         )}
       </div>
       {description && (
