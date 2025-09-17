@@ -1,4 +1,17 @@
 import { dates } from '@/utils/data';
+// Add Dodgy Dave cartoon image to the top of the challenge page
+window.addEventListener('DOMContentLoaded', () => {
+  const challengeRoot = document.querySelector('.challenge-root') || document.body;
+  const img = document.createElement('img');
+  img.src = '/images/dodgy-dave-dog.jpeg';
+  img.alt = 'Dodgy Dave the Dog';
+  img.style.maxWidth = '200px';
+  img.style.display = 'block';
+  img.style.margin = '2rem auto';
+  img.style.borderRadius = '1rem';
+  img.style.boxShadow = '0 2px 12px rgba(0,0,0,0.15)';
+  challengeRoot.prepend(img);
+});
 
 const tickersArr: string[] = [];
 
