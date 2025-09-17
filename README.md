@@ -1,5 +1,30 @@
 # Dodgy Dave's Stock Predictions - Scrimba AI
 
+## Project Overview
+
+This is a multi-app AI playground built with Next.js, OpenAI, and Polygon.io APIs. It features:
+
+- **Dodgy Dave's Stock Predictions:**
+  - Enter one or more stock tickers and get a hilariously unreliable, AI-generated report on their recent performance and buy/hold/sell advice.
+  - Add or remove tickers before generating a report.
+  - Data is fetched securely and analyzed with OpenAI for creative, entertaining results.
+
+- **ArtMatch:**
+  - Generate AI art from any prompt you enter.
+  - Get a creative, philosophical, or goofy AI-generated description of your image.
+  - Robust error handling and a modern, branded UI.
+
+- **Pollyglot:**
+  - Instantly translate text into multiple languages using AI.
+  - See translations and optionally generate an image for your prompt.
+
+- **Explain:**
+  - Get clear, concise AI explanations for any topic, tailored to your audience (e.g., "Explain quantum physics to a 10-year-old").
+
+All apps are accessible from a unified dashboard, with secure API integration, robust error handling, and a beautiful Tailwind CSS UI.
+
+---
+
 Scrimba AI project for humorous stock predictions using OpenAI and Polygon.io APIs.
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app) and TypeScript.
