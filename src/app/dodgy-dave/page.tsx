@@ -24,10 +24,22 @@ export default function DodgyDavePage() {
     }
   };
 
+
+  const handleRemoveTicker = (idx: number) => {
+    setTickersArr(arr => arr.filter((_, i) => i !== idx));
+  };
+
   const renderTickers = () => (
     <div className="ticker-choice-display" style={{ margin: '1rem 0', display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
       {tickersArr.map((ticker, idx) => (
-        <span key={idx} className="ticker" style={{ background: '#eee', padding: '0.25rem 0.75rem', borderRadius: '0.5rem', fontWeight: 600 }}>{ticker}</span>
+        <span key={idx} className="ticker" style={{ background: '#eee', padding: '0.25rem 0.75rem', borderRadius: '0.5rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          {ticker}
+          <button
+            aria-label={`Remove ${ticker}`}
+            onClick={() => handleRemoveTicker(idx)}
+            style={{ background: 'transparent', border: 'none', color: '#e11d48', fontWeight: 700, cursor: 'pointer', marginLeft: 4 }}
+          >×</button>
+        </span>
       ))}
     </div>
   );
