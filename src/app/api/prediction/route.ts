@@ -24,7 +24,15 @@ export async function POST(request: NextRequest) {
         const report = completion.choices[0]?.message?.content || '';
         return NextResponse.json({ report });
       } catch (error) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        let message: string;
+        if (error instanceof Error) {
+          message = error.message;
+        } else if (typeof error === 'string') {
+          message = error;
+        } else {
+          message = JSON.stringify(error);
+        }
+        return NextResponse.json({ error: message }, { status: 500 });
       }
     }
 

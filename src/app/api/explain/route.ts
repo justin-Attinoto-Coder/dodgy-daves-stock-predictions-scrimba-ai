@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
-import { config } from '@/utils/config';
+import config from '@/utils/config';
 
 const openai = new OpenAI({ apiKey: config.openaiApiKey });
 
@@ -21,6 +21,7 @@ export async function POST(req: NextRequest) {
     const explanation = completion.choices[0]?.message?.content || '';
     return NextResponse.json({ explanation });
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    const message = error instanceof Error ? error.message : String(error);
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

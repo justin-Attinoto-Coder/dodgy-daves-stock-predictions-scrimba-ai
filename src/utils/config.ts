@@ -1,3 +1,10 @@
+// Default config export for compatibility
+const config = {
+  openaiApiKey: process.env.OPENAI_API_KEY,
+  polygonApiKey: process.env.POLYGON_API_KEY,
+};
+
+export default config;
 import { EnvConfig } from '@/types';
 
 /**

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import * as React from 'react';
+import { useState } from 'react';
 
 const ExplainForm: React.FC = () => {
   const [topic, setTopic] = useState('Quantum Computing');
@@ -7,7 +8,7 @@ const ExplainForm: React.FC = () => {
   const [explanation, setExplanation] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     setExplanation('');
@@ -31,12 +32,12 @@ const ExplainForm: React.FC = () => {
       <form onSubmit={handleSubmit}>
         <label>
           Topic:
-          <input value={topic} onChange={e => setTopic(e.target.value)} style={{ width: '100%' }} />
+          <input value={topic} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTopic(e.target.value)} style={{ width: '100%' }} />
         </label>
         <br /><br />
         <label>
           Complexity:
-          <select value={complexity} onChange={e => setComplexity(e.target.value)}>
+          <select value={complexity} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setComplexity(e.target.value)}>
             <option value="10-year-old">10-year-old</option>
             <option value="college student">College Student</option>
             <option value="PhD">PhD</option>
@@ -45,7 +46,7 @@ const ExplainForm: React.FC = () => {
         <br /><br />
         <label>
           Length:
-          <select value={length} onChange={e => setLength(e.target.value)}>
+          <select value={length} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setLength(e.target.value)}>
             <option value="short">Short</option>
             <option value="long">Long</option>
           </select>
@@ -64,6 +65,6 @@ const ExplainForm: React.FC = () => {
       )}
     </div>
   );
-};
+}
 
 export default ExplainForm;
