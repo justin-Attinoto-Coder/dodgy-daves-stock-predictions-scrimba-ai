@@ -51,12 +51,14 @@ export default function PollyglotPage() {
   }
 
   return (
-    <main style={{ maxWidth: 600, margin: '2rem auto', padding: '2rem', background: '#fff', borderRadius: '1rem', boxShadow: '0 2px 12px rgba(0,0,0,0.08)' }}>
-      <img src="/images/polly-glot-1.jpg" alt="Pollyglot Bird" style={{ display: 'block', margin: '0 auto 1rem', maxWidth: '120px', borderRadius: '1rem', boxShadow: '0 2px 12px rgba(0,0,0,0.10)' }} />
-      <h1 style={{ textAlign: 'center' }}>Pollyglot Perfect Translation</h1>
-      <p style={{ textAlign: 'center' }}>Select a language, type your message, and Polly (the bird) will translate it perfectly every time!</p>
-      <form onSubmit={handleTranslate} style={{ margin: '2rem 0', textAlign: 'center' }}>
-        <select value={language} onChange={e => setLanguage(e.target.value)} style={{ padding: '0.5rem', borderRadius: '0.5rem', marginRight: '1rem' }}>
+    <main className="max-w-xl mx-auto p-8 rounded-2xl shadow-xl bg-gradient-to-br from-purple-600 via-pink-500 to-red-500 min-h-[80vh]">
+      <img src="/images/polly-glot-1.jpg" alt="Pollyglot Bird" className="block mx-auto mb-4 max-w-[120px] rounded-xl shadow-lg" />
+      <h1 className="text-3xl font-extrabold text-white text-center mb-2 select-none" style={{ transform: 'rotate(-2deg)' }}>
+        <span className="animate-pulse">Pollyglot Perfect Translation</span>
+      </h1>
+      <p className="text-center text-white/80 mb-6">Select a language, type your message, and Polly (the bird) will translate it perfectly every time!</p>
+      <form onSubmit={handleTranslate} className="mb-8 flex flex-col gap-4 items-center">
+        <select value={language} onChange={e => setLanguage(e.target.value)} className="p-2 rounded-lg bg-white/80 text-gray-800 font-semibold mb-2">
           {LANGUAGES.map(lang => (
             <option key={lang.code} value={lang.code}>{lang.name}</option>
           ))}
@@ -65,40 +67,46 @@ export default function PollyglotPage() {
           type="text"
           value={input}
           onChange={e => setInput(e.target.value)}
-          placeholder="how are you?"
-          style={{ padding: '0.5rem 1rem', borderRadius: '0.5rem', border: '1px solid #ccc', width: '60%' }}
+          placeholder={currentLang?.placeholder || 'how are you?'}
+          className="p-2 rounded-lg border border-gray-300 w-3/4 font-semibold"
         />
-        <button type="submit" disabled={loading || !input} style={{ padding: '0.5rem 1.5rem', borderRadius: '0.5rem', background: '#4f46e5', color: '#fff', border: 'none', cursor: 'pointer', fontWeight: 600, marginLeft: '1rem' }}>
+        <button type="submit" disabled={loading || !input} className="p-3 rounded-lg bg-purple-500 text-white font-bold cursor-pointer transition hover:bg-pink-500 animate-pulse mt-2">
           {loading ? 'Translating...' : 'Send'}
         </button>
       </form>
-      {error && <div style={{ color: 'red', textAlign: 'center', marginBottom: '1rem' }}>{error}</div>}
+      {error && <div className="text-red-300 text-center mb-4 font-semibold">{error}</div>}
       {translation && (
-        <div style={{ textAlign: 'center', margin: '1rem 0', fontWeight: 600 }}>
-          <span>Translation:</span>
-          <span style={{ marginLeft: '1rem', color: '#4f46e5' }}>{translation}</span>
+        <div className="text-center mb-4 font-semibold bg-white/80 p-4 rounded-xl">
+          <span className="text-lg font-bold text-purple-500" style={{ transform: 'rotate(1deg)' }}>
+            <span className="animate-pulse">Translation:</span>
+          </span>
+          <span className="ml-4 text-pink-500">{translation}</span>
         </div>
       )}
       {image && (
-        <div style={{ textAlign: 'center', margin: '2rem 0' }}>
-          <img src={`data:image/png;base64,${image}`} alt="AI generated art" style={{ maxWidth: '100%', borderRadius: '1rem', boxShadow: '0 2px 12px rgba(0,0,0,0.10)' }} />
+        <div className="text-center my-8">
+          <img src={`data:image/png;base64,${image}`} alt="AI generated art" className="max-w-full rounded-xl shadow-lg" />
         </div>
       )}
-      <div style={{ marginTop: '2rem' }}>
-        <h2 style={{ textAlign: 'center' }}>Chat History</h2>
-        <div style={{ background: '#f7f7f7', borderRadius: '1rem', padding: '1rem', minHeight: '80px' }}>
-          {chat.length === 0 ? <p style={{ color: '#888', textAlign: 'center' }}>No messages yet.</p> : (
+      <div className="mt-8">
+        <h2 className="text-xl font-bold text-white text-center mb-4" style={{ transform: 'rotate(-1deg)' }}>
+          <span className="animate-pulse">Chat History</span>
+        </h2>
+        <div className="bg-white/80 rounded-xl p-4 min-h-[80px]">
+          {chat.length === 0 ? <p className="text-gray-400 text-center">No messages yet.</p> : (
             chat.map((msg, idx) => (
-              <div key={idx} style={{ marginBottom: '1rem', textAlign: 'left' }}>
-                <div style={{ fontWeight: 600 }}>You: <span style={{ color: '#222' }}>{msg.text}</span></div>
-                <div style={{ color: '#4f46e5' }}>Pollyglot ({LANGUAGES.find(l => l.code === msg.lang)?.name}): <span>{msg.translation}</span></div>
+              <div key={idx} className="mb-4 text-left">
+                <div className="font-bold text-purple-500">You: <span className="text-gray-800">{msg.text}</span></div>
+                <div className="text-pink-500">Pollyglot ({LANGUAGES.find(l => l.code === msg.lang)?.name}): <span>{msg.translation}</span></div>
               </div>
             ))
           )}
         </div>
       </div>
-      <div style={{ textAlign: 'center', marginTop: '2rem', display: 'flex', justifyContent: 'center', gap: '1rem' }}>
-        <Link href="/"><button style={{ padding: '0.5rem 1.5rem', borderRadius: '0.5rem', background: '#eee', border: 'none', cursor: 'pointer' }}>Home</button></Link>
+      <div className="text-center mt-8 flex justify-center gap-4">
+        <Link href="/">
+          <button className="p-2 px-6 rounded-lg bg-white/80 text-purple-500 font-bold cursor-pointer transition hover:bg-pink-100">Home</button>
+        </Link>
       </div>
     </main>
   );
