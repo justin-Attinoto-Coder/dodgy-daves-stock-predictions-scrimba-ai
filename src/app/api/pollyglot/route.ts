@@ -30,12 +30,13 @@ export async function POST(request: NextRequest) {
     // Log full error details for debugging
     console.error('Pollyglot API error:', error);
     let errorMessage = 'Translation failed';
-    if (error?.response?.data) {
-      errorMessage += ': ' + JSON.stringify(error.response.data);
-    } else if (error?.message) {
-      errorMessage += ': ' + error.message;
-    } else if (typeof error === 'string') {
-      errorMessage += ': ' + error;
+    const err = error as any;
+    if (err?.response?.data) {
+      errorMessage += ': ' + JSON.stringify(err.response.data);
+    } else if (err?.message) {
+      errorMessage += ': ' + err.message;
+    } else if (typeof err === 'string') {
+      errorMessage += ': ' + err;
     }
     return NextResponse.json({ error: errorMessage }, { status: 500 });
   }

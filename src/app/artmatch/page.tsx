@@ -34,8 +34,12 @@ export default function ArtMatchPage() {
         )}
       </main>
     );
-      setError('Error generating image');
-      console.error(err);
+        setLoading(false);
+      } catch (error: any) {
+        setError('Error generating image');
+        console.error(error);
+      }
+      setLoading(false);
     }
     setLoading(false);
   }
@@ -80,4 +84,4 @@ export default function ArtMatchPage() {
       </div>
     </main>
   );
-}
+// ...existing code...
