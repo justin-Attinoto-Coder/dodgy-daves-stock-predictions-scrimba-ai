@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
-import { config } from '@/utils/config';
+import config from '@/utils/config';
 
 export async function POST(request: NextRequest) {
   try {
