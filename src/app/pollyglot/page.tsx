@@ -46,7 +46,7 @@ export default function PollyglotPage() {
       } else {
         setError(result.error || 'Translation failed');
       }
-    } catch (err) {
+    } catch {
       setError('Error translating');
     }
     setLoading(false);

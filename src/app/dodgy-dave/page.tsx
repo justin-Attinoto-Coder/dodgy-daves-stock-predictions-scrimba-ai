@@ -94,7 +94,7 @@ export default function DodgyDavePage() {
   return (
     <main style={{ maxWidth: 600, margin: '2rem auto', padding: '2rem', background: '#fff', borderRadius: '1rem', boxShadow: '0 2px 12px rgba(0,0,0,0.08)' }}>
       <Image src="/images/dodgy-dave-dog.jpeg" alt="Dodgy Dave the Dog" width={120} height={120} style={{ display: 'block', margin: '0 auto 1rem', borderRadius: '1rem' }} />
-      <h1 style={{ textAlign: 'center' }}>Dodgy Dave's Stock Predictions</h1>
+  <h1 style={{ textAlign: 'center' }}>Dodgy Dave&apos;s Stock Predictions</h1>
       <p style={{ textAlign: 'center' }}>Hilariously unreliable stock market predictions powered by AI - for entertainment purposes only!</p>
       <form id="ticker-input-form" onSubmit={handleTickerSubmit} style={{ margin: '2rem 0', textAlign: 'center' }}>
         <input

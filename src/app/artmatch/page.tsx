@@ -60,8 +60,8 @@ export default function ArtMatchPage() {
       }
   } catch (error: unknown) {
       let errorMsg = 'Error generating image';
-      if (error && typeof error === 'object' && 'message' in error && typeof (error as any).message === 'string') {
-        errorMsg += ': ' + (error as any).message;
+      if (error && typeof error === 'object' && 'message' in error && typeof (error as { message?: string }).message === 'string') {
+        errorMsg += ': ' + (error as { message: string }).message;
       }
       setError(errorMsg);
       console.error(error);

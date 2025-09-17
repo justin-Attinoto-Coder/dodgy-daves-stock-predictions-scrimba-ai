@@ -30,8 +30,8 @@ export async function POST(request: NextRequest) {
     // Log full error details for debugging
     console.error('Pollyglot API error:', error);
     let errorMessage = 'Translation failed';
-    if (error && typeof error === 'object' && 'message' in error && typeof (error as any).message === 'string') {
-      errorMessage += ': ' + (error as any).message;
+    if (error && typeof error === 'object' && 'message' in error && typeof (error as { message?: string }).message === 'string') {
+      errorMessage += ': ' + (error as { message: string }).message;
     } else if (typeof error === 'string') {
       errorMessage += ': ' + error;
     }

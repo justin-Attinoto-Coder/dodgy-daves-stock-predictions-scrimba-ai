@@ -20,7 +20,7 @@ const ExplainForm: React.FC = () => {
       });
       const data = await res.json();
       setExplanation(data.explanation || data.error);
-    } catch (err) {
+    } catch {
       setExplanation('Error fetching explanation.');
     }
     setLoading(false);
