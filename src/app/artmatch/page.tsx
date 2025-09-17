@@ -8,31 +8,55 @@ export default function ArtMatchPage() {
   const [image, setImage] = React.useState<string | null>(null);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
+  const [description, setDescription] = React.useState<string | null>(null);
 
   async function generateImage() {
     setLoading(true);
     setError(null);
     setImage(null);
     try {
-      // Directly call OpenAI from browser (dangerouslyAllowBrowser)
-      // You must have OpenAI JS SDK loaded and API key available in browser
-      // This is for demo purposes only; use API route for production
-      // @ts-ignore
-      const OpenAI = (await import('openai')).default;
-      // @ts-ignore
-      const openai = new OpenAI({ dangerouslyAllowBrowser: true });
-      const response = await openai.images.generate({
-        prompt,
-        n: 1,
-        size: '256x256',
-        response_format: 'b64_json'
+      const response = await fetch('/api/artmatch', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt })
       });
-      const imgData = response.data[0]?.b64_json ?? null;
-      setImage(imgData);
+      if (!response.ok) {
+        let errorText = await response.text();
+        if (response.status === 429) {
+          setError('AI service rate limit reached. Please wait and try again.');
+        } else if (response.status === 503) {
+          setError('AI service is currently unavailable. Please try again later.');
+        } else if (response.status === 401) {
+          setError('AI service authentication failed. Please check your API key.');
+        } else {
+          setError(`Image generation failed: ${errorText}`);
+        }
+        setLoading(false);
+        return;
+      }
+      const result = await response.json();
+      if (result.image) {
+        setImage(result.image);
+        // Generate description using prompt
+        const descResponse = await fetch('/api/explain', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt })
+        });
+        const descResult = await descResponse.json();
+        setDescription(descResult.explanation || null);
+      } else if (result.error) {
+        if (result.error.includes('quota') || result.error.includes('token')) {
+          setError('AI service quota or token limit reached. Please upgrade your plan or try again later.');
+        } else {
+          setError(result.error);
+        }
+      } else {
+        setError('Image generation failed.');
+      }
     } catch (error: any) {
       let errorMsg = 'Error generating image';
       if (error?.message) errorMsg += ': ' + error.message;
-      if (error?.response?.data) errorMsg += ' ' + JSON.stringify(error.response.data);
       setError(errorMsg);
       console.error(error);
     }
@@ -40,42 +64,47 @@ export default function ArtMatchPage() {
   }
 
   return (
-    <main style={{ maxWidth: 600, margin: '2rem auto', padding: '2rem', background: '#fff', borderRadius: '1rem', boxShadow: '0 2px 12px rgba(0,0,0,0.08)' }}>
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginBottom: '1rem' }}>
-        <img src="/images/art-match-1.jpg" alt="ArtMatch Example 1" style={{ maxWidth: '100px', borderRadius: '1rem', boxShadow: '0 2px 12px rgba(0,0,0,0.10)' }} />
-        <img src="/images/art-match-2.jpg" alt="ArtMatch Example 2" style={{ maxWidth: '100px', borderRadius: '1rem', boxShadow: '0 2px 12px rgba(0,0,0,0.10)' }} />
+    <main className="max-w-xl mx-auto p-8 rounded-2xl shadow-xl bg-gradient-to-br from-pink-500 via-purple-500 to-red-500 min-h-[80vh]">
+      <div className="flex justify-center gap-4 mb-6">
+        <img src="/images/art-match-1.jpg" alt="ArtMatch Example 1" className="max-w-[100px] rounded-xl shadow-lg" />
+        <img src="/images/art-match-2.jpg" alt="ArtMatch Example 2" className="max-w-[100px] rounded-xl shadow-lg" />
       </div>
-      <h1 style={{ textAlign: 'center' }}>ArtMatch: AI Art Generator</h1>
-      <p style={{ textAlign: 'center' }}>Enter a description or prompt and generate an AI image!</p>
-      <div style={{ textAlign: 'center', margin: '2rem 0' }}>
+      <h1 className="text-3xl font-extrabold text-white text-center mb-8 select-none" style={{ transform: 'rotate(-2deg)' }}>
+        <span className="animate-pulse">ArtMatch: AI Art Generator</span>
+      </h1>
+      <p className="text-center text-white/80 mb-6">Enter a description or prompt and generate an AI image!</p>
+      <form onSubmit={e => { e.preventDefault(); generateImage(); }} className="mb-8 flex flex-col gap-4 items-center">
         <input
           id="instruction"
           type="text"
           value={prompt}
           onChange={e => setPrompt(e.target.value)}
           placeholder="A 16th-century woman with long brown hair..."
-          style={{ width: '80%', padding: '0.5rem', borderRadius: '0.5rem', border: '1px solid #ccc', marginBottom: '1rem' }}
+          className="p-2 rounded-lg border border-gray-300 w-3/4 font-semibold mb-2"
         />
-        <br />
         <button
           id="submit-btn"
-          onClick={generateImage}
+          type="submit"
           disabled={loading || !prompt}
-          style={{ padding: '0.5rem 1.5rem', borderRadius: '0.5rem', background: '#4f46e5', color: '#fff', border: 'none', cursor: 'pointer', fontWeight: 600 }}
+          className="p-3 rounded-lg bg-pink-500 text-white font-bold cursor-pointer transition hover:bg-purple-500 animate-pulse mt-2"
         >
           {loading ? 'Generating...' : 'Generate Image'}
         </button>
-      </div>
-      {error && <div style={{ color: 'red', textAlign: 'center', marginBottom: '1rem' }}>{error}</div>}
-      <div id="output-img" style={{ textAlign: 'center', margin: '2rem 0' }}>
+      </form>
+      {error && <div className="text-red-300 text-center mb-4 font-semibold">{error}</div>}
+      <div id="output-img" className="text-center my-8">
         {image && (
-          <img src={`data:image/png;base64,${image}`} alt="AI generated art" style={{ maxWidth: '100%', borderRadius: '1rem', boxShadow: '0 2px 12px rgba(0,0,0,0.10)' }} />
+          <img src={`data:image/png;base64,${image}`} alt="AI generated art" className="max-w-full rounded-xl shadow-lg mx-auto" />
         )}
       </div>
-      <div style={{ textAlign: 'center', marginTop: '2rem', display: 'flex', justifyContent: 'center', gap: '1rem' }}>
-        <Link href="/dodgy-dave"><button style={{ padding: '0.5rem 1.5rem', borderRadius: '0.5rem', background: '#eee', border: 'none', cursor: 'pointer' }}>Back to Dodgy Dave</button></Link>
-        <Link href="/"><button style={{ padding: '0.5rem 1.5rem', borderRadius: '0.5rem', background: '#eee', border: 'none', cursor: 'pointer' }}>Home</button></Link>
-      </div>
+      {description && (
+        <div className="bg-white/80 p-4 rounded-xl mb-4 font-semibold text-center">
+          <h2 className="text-lg font-bold text-purple-500 mb-2" style={{ transform: 'rotate(1deg)' }}>
+            <span className="animate-pulse">Description:</span>
+          </h2>
+          <p className="text-gray-800 font-semibold">{description}</p>
+        </div>
+      )}
     </main>
   );
 }
