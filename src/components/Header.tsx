@@ -7,6 +7,7 @@ export default function Header() {
         <Link href="/" style={{ fontWeight: 600, color: '#222', textDecoration: 'none' }}>Home</Link>
         <Link href="/dodgy-dave" style={{ fontWeight: 600, color: '#222', textDecoration: 'none' }}>Dodgy Dave</Link>
         <Link href="/artmatch" style={{ fontWeight: 600, color: '#222', textDecoration: 'none' }}>ArtMatch</Link>
+        <Link href="/pollyglot" style={{ fontWeight: 600, color: '#222', textDecoration: 'none' }}>Pollyglot</Link>
       </nav>
     </header>
   );

@@ -23,9 +23,17 @@ export default function Home() {
         </a>
         <a href="/artmatch" style={{ textDecoration: 'none' }}>
           <div style={{ width: 220, textAlign: 'center', background: '#f7f7f7', borderRadius: '1rem', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', padding: '1rem', cursor: 'pointer', transition: 'box-shadow 0.2s' }}>
-            <img src="/images/dodgy-dave-dog.jpeg" alt="Dodgy Dave the Dog" width={80} height={80} style={{ borderRadius: '1rem', marginBottom: '1rem' }} />
+            <img src="/images/art-match-1.jpg" alt="ArtMatch Example 1" width={80} height={80} style={{ borderRadius: '1rem', marginBottom: '0.5rem', boxShadow: '0 2px 12px rgba(0,0,0,0.10)' }} />
+            <img src="/images/art-match-2.jpg" alt="ArtMatch Example 2" width={80} height={80} style={{ borderRadius: '1rem', marginBottom: '1rem', boxShadow: '0 2px 12px rgba(0,0,0,0.10)' }} />
             <h2>ArtMatch</h2>
             <p style={{ fontSize: '0.95rem', color: '#444' }}>Describe art by famous artists with AI.</p>
+          </div>
+        </a>
+        <a href="/pollyglot" style={{ textDecoration: 'none' }}>
+          <div style={{ width: 220, textAlign: 'center', background: '#f7f7f7', borderRadius: '1rem', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', padding: '1rem', cursor: 'pointer', transition: 'box-shadow 0.2s' }}>
+            <img src="/images/polly-glot-1.jpg" alt="Pollyglot Bird" width={80} height={80} style={{ borderRadius: '1rem', marginBottom: '1rem', boxShadow: '0 2px 12px rgba(0,0,0,0.10)' }} />
+            <h2>Pollyglot</h2>
+            <p style={{ fontSize: '0.95rem', color: '#444' }}>Perfect translation every time, powered by AI.</p>
           </div>
         </a>
       </div>
