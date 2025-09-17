@@ -13,23 +13,27 @@ export default function ArtMatchPage() {
     setLoading(true);
     setError(null);
     setImage(null);
-    try {
-      // Directly call OpenAI from browser (dangerouslyAllowBrowser)
-      // You must have OpenAI JS SDK loaded and API key available in browser
-      // This is for demo purposes only; use API route for production
-      // @ts-ignore
-      const OpenAI = (await import('openai')).default;
-      // @ts-ignore
-      const openai = new OpenAI({ dangerouslyAllowBrowser: true });
-      const response = await openai.images.generate({
-        prompt,
-        n: 1,
-        size: '256x256',
-        response_format: 'b64_json'
-      });
-      const imgData = response.data[0]?.b64_json ?? null;
-      setImage(imgData);
-    } catch (err: any) {
+    return (
+      <main className="max-w-xl mx-auto p-8 rounded-2xl shadow-xl bg-gradient-to-br from-pink-500 via-purple-500 to-red-500 min-h-[80vh]">
+        <Link href="/" className="text-white/80 hover:underline mb-4 block">← Back to Dashboard</Link>
+        <h1 className="text-3xl font-extrabold text-white text-center mb-8 select-none" style={{ transform: 'rotate(-2deg)' }}>
+          <span className="animate-pulse">ArtMatch</span>
+        </h1>
+        <form onSubmit={e => { e.preventDefault(); generateImage(); }} className="mb-8 flex flex-col gap-4">
+          <label htmlFor="prompt" className="text-white font-semibold">Describe the art you want to generate:</label>
+          <input id="prompt" type="text" value={prompt} onChange={e => setPrompt(e.target.value)} placeholder="e.g. A Van Gogh style sunset" className="p-2 rounded-lg bg-white/80 text-gray-800 font-semibold" />
+          <button type="submit" disabled={loading} className="p-3 rounded-lg bg-pink-500 text-white font-bold cursor-pointer transition hover:bg-purple-500 animate-pulse">
+            {loading ? 'Generating...' : 'Generate Art'}
+          </button>
+        </form>
+        {error && <p className="text-red-300 mb-4 font-semibold">{error}</p>}
+        {image && (
+          <div className="text-center mb-8">
+            <img src={`data:image/png;base64,${image}`} alt="Generated art" className="max-w-full rounded-xl shadow-lg mx-auto" />
+          </div>
+        )}
+      </main>
+    );
       setError('Error generating image');
       console.error(err);
     }

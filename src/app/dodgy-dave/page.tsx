@@ -112,27 +112,25 @@ export default function DodgyDavePage() {
           style={{ padding: '0.5rem 1.5rem', borderRadius: '0.5rem', background: '#4f46e5', color: '#fff', border: 'none', cursor: tickerInput.length < 3 ? 'not-allowed' : 'pointer', fontWeight: 600 }}
         >Add Ticker</button>
       </form>
-      {error && <div style={{ color: 'red', textAlign: 'center', marginBottom: '1rem' }}>{error}</div>}
-      {renderTickers()}
-      <div className="action-panel" style={{ textAlign: 'center', margin: '2rem 0' }}>
-        <button
-          onClick={fetchStockData}
-          className="generate-report-btn"
-          disabled={tickersArr.length === 0 || loading}
-          style={{ padding: '0.5rem 1.5rem', borderRadius: '0.5rem', background: '#22c55e', color: '#fff', border: 'none', cursor: tickersArr.length === 0 || loading ? 'not-allowed' : 'pointer', fontWeight: 600 }}
-        >{loading ? 'Loading...' : 'Generate Report'}</button>
-      </div>
-      <div className="loading-panel" style={{ display: loading ? 'flex' : 'none', justifyContent: 'center', alignItems: 'center', minHeight: '60px', color: '#555', fontWeight: 600 }}>
-        {apiMessage || 'Loading...'}
-      </div>
-      <div id="api-message" style={{ textAlign: 'center', margin: '1rem 0', color: '#555', fontWeight: 600 }}>{apiMessage}</div>
-      <div className="output-panel" style={{ display: report ? 'flex' : 'none', flexDirection: 'column', alignItems: 'center', margin: '2rem 0' }}>
-        <p style={{ background: '#f7f7f7', padding: '1rem', borderRadius: '1rem', maxWidth: '100%', fontSize: '1.1rem' }}>{report}</p>
-      </div>
-      <div style={{ textAlign: 'center', marginTop: '2rem', display: 'flex', justifyContent: 'center', gap: '1rem' }}>
-        <Link href="/artmatch"><button style={{ padding: '0.5rem 1.5rem', borderRadius: '0.5rem', background: '#eee', border: 'none', cursor: 'pointer' }}>Go to ArtMatch</button></Link>
-        <Link href="/"><button style={{ padding: '0.5rem 1.5rem', borderRadius: '0.5rem', background: '#eee', border: 'none', cursor: 'pointer' }}>Home</button></Link>
-      </div>
+          {error && <div className="text-red-300 text-center mb-4 font-semibold">{error}</div>}
+          {renderTickers()}
+          <div className="action-panel text-center my-8">
+            <button
+              onClick={fetchStockData}
+              className="p-3 rounded-lg bg-pink-500 text-white font-bold cursor-pointer transition hover:bg-purple-500 animate-pulse"
+              disabled={tickersArr.length === 0 || loading}
+            >{loading ? 'Generating...' : 'Generate Report'}</button>
+          </div>
+          {apiMessage && <div className="text-pink-300 text-center mb-4 font-semibold">{apiMessage}</div>}
+          {report && (
+            <div className="bg-white/80 p-4 rounded-xl mb-4 font-semibold">
+              <h2 className="text-lg font-bold text-red-500 mb-2" style={{ transform: 'rotate(1deg)' }}>
+                <span className="animate-pulse">AI Report:</span>
+              </h2>
+              <p className="text-gray-800 font-semibold">{report}</p>
+            </div>
+          )}
+          <Link href="/" className="text-white/80 hover:underline mt-8 block">← Back to Dashboard</Link>
     </main>
   );
 }
