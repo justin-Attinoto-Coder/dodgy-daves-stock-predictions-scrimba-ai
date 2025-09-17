@@ -37,11 +37,15 @@ export default function ArtMatchPage() {
       const result = await response.json();
       if (result.image) {
         setImage(result.image);
-        // Generate description using prompt
+        // Generate a creative, philosophical, or goofy description of the image
         const descResponse = await fetch('/api/explain', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ prompt })
+          body: JSON.stringify({
+            topic: `Describe this image in a creative, philosophical, or goofy way: ${prompt}`,
+            complexity: 'philosopher',
+            length: 'short'
+          })
         });
         const descResult = await descResponse.json();
         setDescription(descResult.explanation || null);

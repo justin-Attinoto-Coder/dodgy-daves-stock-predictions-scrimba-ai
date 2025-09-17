@@ -1,12 +1,6 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import Head from "next/head";
-import Header from "@/components/Header";
 
-export const metadata: Metadata = {
-  title: "Dodgy Dave's Stock Predictions",
-  description: "Hilariously unreliable stock market predictions powered by AI - for entertainment purposes only!",
-};
+import "./globals.css";
+import Header from "@/components/Header";
 
 export default function RootLayout({
   children,
@@ -15,9 +9,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Head>
+      <head>
         <meta name="polygon-api-key" content={process.env.POLYGON_API_KEY || ""} />
-      </Head>
+      </head>
       <body className="antialiased">
         <Header />
         {children}
