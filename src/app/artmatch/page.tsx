@@ -45,7 +45,6 @@ export default function ArtMatchPage() {
         <img src="/images/art-match-1.jpg" alt="ArtMatch Example 1" style={{ maxWidth: '100px', borderRadius: '1rem', boxShadow: '0 2px 12px rgba(0,0,0,0.10)' }} />
         <img src="/images/art-match-2.jpg" alt="ArtMatch Example 2" style={{ maxWidth: '100px', borderRadius: '1rem', boxShadow: '0 2px 12px rgba(0,0,0,0.10)' }} />
       </div>
-      <Image src="/images/dodgy-dave-dog.jpeg" alt="Dodgy Dave the Dog" width={120} height={120} style={{ display: 'block', margin: '0 auto 1rem', borderRadius: '1rem' }} />
       <h1 style={{ textAlign: 'center' }}>ArtMatch: AI Art Generator</h1>
       <p style={{ textAlign: 'center' }}>Enter a description or prompt and generate an AI image!</p>
       <div style={{ textAlign: 'center', margin: '2rem 0' }}>
