@@ -68,11 +68,39 @@ async function fetchStockData() {
 }
 
 async function fetchReport(data: string) {
+  // Example 1: Upward trend
+  const example1 = `AAPL,2025-09-14,150.00,2025-09-15,152.00,2025-09-16,155.00`;
+  const example1Report = `Apple stock has shown a steady upward trend over the past 3 days, rising from $150 to $155. This positive momentum suggests a BUY recommendation.`;
+
+  // Example 2: Downward trend
+  const example2 = `TSLA,2025-09-14,250.00,2025-09-15,245.00,2025-09-16,240.00`;
+  const example2Report = `Tesla stock has declined consistently from $250 to $240 over the last 3 days. Given this negative movement, a SELL recommendation is advised.`;
+
+  // Separator
+  const separator = '\n---\n';
+
+  // Build prompt with examples and user data
+  const prompt = [
+    `Example 1 Data:`,
+    example1,
+    `Example 1 Report:`,
+    example1Report,
+    separator,
+    `Example 2 Data:`,
+    example2,
+    `Example 2 Report:`,
+    example2Report,
+    separator,
+    `User Data:`,
+    data,
+    `Report:`
+  ].join('\n');
+
   try {
     const response = await fetch('/api/prediction', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ stockData: data })
+      body: JSON.stringify({ stockData: prompt })
     });
     const result = await response.json();
     renderReport(result.report || result.error);
