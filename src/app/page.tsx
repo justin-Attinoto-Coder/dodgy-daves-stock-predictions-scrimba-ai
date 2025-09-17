@@ -1,43 +1,42 @@
-'use client';
-
-import { useState } from 'react';
 import * as React from 'react';
-import { StockSearch } from '@/components/StockSearch';
-import { StockCard } from '@/components/StockCard';
-import { PredictionCard } from '@/components/PredictionCard';
-import { useStockData } from '@/hooks/useStockData';
-import { usePrediction } from '@/hooks/usePrediction';
-import ExplainForm from '@/components/ExplainForm';
 
 export default function Home() {
   return (
-    <main style={{ maxWidth: 800, margin: '2rem auto', padding: '2rem', background: '#fff', borderRadius: '1rem', boxShadow: '0 2px 12px rgba(0,0,0,0.08)' }}>
-      <h1 style={{ textAlign: 'center', marginBottom: '2rem' }}>AI-Driven Apps Dashboard</h1>
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '2rem', flexWrap: 'wrap' }}>
-  <a href="/dodgy-dave" style={{ textDecoration: 'none' }}>
-          <div style={{ width: 220, textAlign: 'center', background: '#f7f7f7', borderRadius: '1rem', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', padding: '1rem', cursor: 'pointer', transition: 'box-shadow 0.2s' }}>
-            <img src="/images/dodgy-dave-dog.jpeg" alt="Dodgy Dave the Dog" width={80} height={80} style={{ borderRadius: '1rem', marginBottom: '1rem' }} />
-            <h2>Dodgy Dave's Stock Predictions</h2>
-            <p style={{ fontSize: '0.95rem', color: '#444' }}>Hilariously unreliable stock market predictions powered by AI.</p>
+    <main className="max-w-3xl mx-auto p-8 rounded-2xl shadow-xl bg-gradient-to-br from-red-500 via-pink-500 to-purple-600 min-h-[80vh]">
+      <h1 className="text-4xl font-extrabold text-white text-center mb-10 select-none" style={{ transform: 'rotate(-2deg)' }}>
+        <span className="animate-pulse">AI-Driven Apps Dashboard</span>
+      </h1>
+      <div className="flex justify-center gap-8 flex-wrap">
+        <a href="/dodgy-dave" className="no-underline">
+          <div className="w-56 text-center bg-white/80 rounded-xl shadow-lg p-4 cursor-pointer transition hover:shadow-2xl">
+            <img src="/images/dodgy-dave-dog.jpeg" alt="Dodgy Dave the Dog" width={80} height={80} className="rounded-xl mb-4 mx-auto" />
+            <h2 className="text-xl font-bold text-red-500 mb-1" style={{ transform: 'rotate(2deg)' }}>
+              <span className="animate-pulse">Dodgy Dave's Stock Predictions</span>
+            </h2>
+            <p className="text-sm text-gray-700">Hilariously unreliable stock market predictions powered by AI.</p>
           </div>
         </a>
-        <a href="/artmatch" style={{ textDecoration: 'none' }}>
-          <div style={{ width: 220, textAlign: 'center', background: '#f7f7f7', borderRadius: '1rem', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', padding: '1rem', cursor: 'pointer', transition: 'box-shadow 0.2s' }}>
-            <img src="/images/art-match-1.jpg" alt="ArtMatch Example 1" width={80} height={80} style={{ borderRadius: '1rem', marginBottom: '0.5rem', boxShadow: '0 2px 12px rgba(0,0,0,0.10)' }} />
-            <img src="/images/art-match-2.jpg" alt="ArtMatch Example 2" width={80} height={80} style={{ borderRadius: '1rem', marginBottom: '1rem', boxShadow: '0 2px 12px rgba(0,0,0,0.10)' }} />
-            <h2>ArtMatch</h2>
-            <p style={{ fontSize: '0.95rem', color: '#444' }}>Describe art by famous artists with AI.</p>
+        <a href="/artmatch" className="no-underline">
+          <div className="w-56 text-center bg-white/80 rounded-xl shadow-lg p-4 cursor-pointer transition hover:shadow-2xl">
+            <img src="/images/art-match-1.jpg" alt="ArtMatch Example 1" width={80} height={80} className="rounded-xl mb-2 mx-auto shadow-md" />
+            <img src="/images/art-match-2.jpg" alt="ArtMatch Example 2" width={80} height={80} className="rounded-xl mb-4 mx-auto shadow-md" />
+            <h2 className="text-xl font-bold text-pink-500 mb-1" style={{ transform: 'rotate(-3deg)' }}>
+              <span className="animate-pulse">ArtMatch</span>
+            </h2>
+            <p className="text-sm text-gray-700">Describe art by famous artists with AI.</p>
           </div>
         </a>
-        <a href="/pollyglot" style={{ textDecoration: 'none' }}>
-          <div style={{ width: 220, textAlign: 'center', background: '#f7f7f7', borderRadius: '1rem', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', padding: '1rem', cursor: 'pointer', transition: 'box-shadow 0.2s' }}>
-            <img src="/images/polly-glot-1.jpg" alt="Pollyglot Bird" width={80} height={80} style={{ borderRadius: '1rem', marginBottom: '1rem', boxShadow: '0 2px 12px rgba(0,0,0,0.10)' }} />
-            <h2>Pollyglot</h2>
-            <p style={{ fontSize: '0.95rem', color: '#444' }}>Perfect translation every time, powered by AI.</p>
+        <a href="/pollyglot" className="no-underline">
+          <div className="w-56 text-center bg-white/80 rounded-xl shadow-lg p-4 cursor-pointer transition hover:shadow-2xl">
+            <img src="/images/polly-glot-1.jpg" alt="Pollyglot Bird" width={80} height={80} className="rounded-xl mb-4 mx-auto shadow-md" />
+            <h2 className="text-xl font-bold text-purple-500 mb-1" style={{ transform: 'rotate(1deg)' }}>
+              <span className="animate-pulse">Pollyglot</span>
+            </h2>
+            <p className="text-sm text-gray-700">Perfect translation every time, powered by AI.</p>
           </div>
         </a>
       </div>
-      <p style={{ textAlign: 'center', marginTop: '2rem', color: '#888' }}>More AI-powered apps coming soon!</p>
+      <p className="text-center mt-10 text-white/80">More AI-powered apps coming soon!</p>
     </main>
   );
 }
