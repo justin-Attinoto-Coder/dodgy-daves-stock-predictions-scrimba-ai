@@ -27,7 +27,16 @@ export async function POST(request: NextRequest) {
     // const image = imageResponse.data[0]?.b64_json || null;
     return NextResponse.json({ translation });
   } catch (error) {
+    // Log full error details for debugging
     console.error('Pollyglot API error:', error);
-    return NextResponse.json({ error: 'Translation failed' }, { status: 500 });
+    let errorMessage = 'Translation failed';
+    if (error?.response?.data) {
+      errorMessage += ': ' + JSON.stringify(error.response.data);
+    } else if (error?.message) {
+      errorMessage += ': ' + error.message;
+    } else if (typeof error === 'string') {
+      errorMessage += ': ' + error;
+    }
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
