@@ -1,5 +1,5 @@
-import Image from 'next/image';
 "use client";
+import Image from 'next/image';
 import * as React from 'react';
 
 export default function ArtMatchPage() {
